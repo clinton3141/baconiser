@@ -1,0 +1,16 @@
+{
+    "name": "iblamefish/baconiser",
+    "description": "A totally over engineered tool to find the shortest connection between items in your own network of things.",
+    "license": "https://raw.githubusercontent.com/iblamefish/baconiser/master/LICENSE",
+    "authors": [
+        {
+            "name": "Clinton",
+            "email": "iblamefish@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "iblamefish\\baconiser\\": "./src/"
+        }
+    }
+}
