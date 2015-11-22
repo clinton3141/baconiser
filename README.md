@@ -1,6 +1,4 @@
-# the baconiser
-
-[![Build Status](https://api.travis-ci.org/iblamefish/baconiser.svg?branch=master)](https://travis-ci.org/iblamefish/baconiser)
+# the baconiser [![Build Status](https://api.travis-ci.org/iblamefish/baconiser.svg?branch=master)](https://travis-ci.org/iblamefish/baconiser)
 
 A totally over engineered tool to find the shortest connection between items in
 your own network of things. 
