@@ -12,5 +12,9 @@
         "psr-4": {
             "iblamefish\\baconiser\\": "./src/"
         }
+    },
+    "require": {
+        "monolog/monolog": "^1.17",
+        "rollbar/rollbar": "^0.15.0"
     }
 }

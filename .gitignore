@@ -1,1 +1,6 @@
 /vendor/
+config/production.php
+
+
+*.swp
+*.swo
