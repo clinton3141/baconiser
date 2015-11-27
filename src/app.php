@@ -17,7 +17,7 @@ class App {
   public function run(Config $config) {
     $this->config = $config;
 
-    Logger::init(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
+    Logger::register(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
 
   }
 }

@@ -5,7 +5,7 @@ namespace iblamefish\baconiser\Logger;
 class Logger {
   private static $loggers;
 
-  public static function init(iLogger $logger, $levels) {
+  public static function register(iLogger $logger, $levels) {
   if (self::$loggers == null) {
       self::$loggers = array(
         'debug' => array(),
