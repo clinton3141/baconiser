@@ -22,35 +22,35 @@ class Logger {
         }
       }
     }
-
-        print_r(self::$loggers);
   }
 
   public static function debug($message) {
-    foreach (self::$loggers['debug'] as $logger) {
-      $logger->debug($message);
-    }
+    self::send($message, 'debug');
   }
 
   public static function error($message) {
-    foreach (self::$loggers['error'] as $logger) {
-      $logger->error($message);
-    }
+    self::send($message, 'error');
   }
 
   public static function info($message) {
-    foreach (self::$loggers['info'] as $logger) {
-      $logger->info($message);
-    }
+    self::send($message, 'info');
   }
 
   public static function warn($message) {
-    foreach (self::$loggers['warn'] as $logger) {
-      $logger->warn($message);
-    }
+    self::send($message, 'warn');
   }
 
   public static function log($message) {
     self::info($message);
+  }
+
+  private static function send($message, $level) {
+    $loggers = self::$loggers[$level];
+
+    foreach ($loggers as $logger) {
+      if(method_exists($logger, $level)) {
+        $logger->$level($message);
+      }
+    }
   }
 }
