@@ -5,6 +5,15 @@ namespace iblamefish\baconiser\Logger;
 class Logger {
   private static $loggers;
 
+  /**
+   * Register a Logger instance with associated log levels.
+   *
+   * A logging method exists for each of the following levels:
+   *   - debug
+   *   - error
+   *   - info
+   *   - warn
+   */
   public static function register(iLogger $logger, $levels) {
   if (self::$loggers == null) {
       self::$loggers = array(
@@ -24,22 +33,37 @@ class Logger {
     }
   }
 
+  /**
+   * send $message to all loggers registered with debug level
+   */
   public static function debug($message) {
     self::send($message, 'debug');
   }
 
+  /**
+   * send $message to all loggers registered with error level
+   */
   public static function error($message) {
     self::send($message, 'error');
   }
 
+  /**
+   * send $message to all loggers registered with info level
+   */
   public static function info($message) {
     self::send($message, 'info');
   }
 
+  /**
+   * send $message to all loggers registered with warn level
+   */
   public static function warn($message) {
     self::send($message, 'warn');
   }
 
+  /**
+   * alias of Logger::info
+   */
   public static function log($message) {
     self::info($message);
   }
