@@ -19,15 +19,6 @@ class App {
 
     Logger::init(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
 
-    Logger::warn('warning');
-
-    Logger::debug('debug!');
-
-    Logger::info('info');
-
-    Logger::log('log');
-
-    Logger::error('error');
   }
 }
 
