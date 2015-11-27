@@ -3,32 +3,54 @@
 namespace iblamefish\baconiser\Logger;
 
 class Logger {
-	private static $logger;
+	private static $loggers;
 
-	public static function init(iLogger $logger) {
-		if (self::$logger == null) {
-			self::$logger = $logger;
+	public static function init(iLogger $logger, $levels) {
+		if (self::$loggers == null) {
+			self::$loggers = array(
+				'debug' => array(),
+				'error' => array(),
+				'info' => array(),
+				'warn' => array()
+			);
 		}
+
+		if (is_array($levels)) {
+			foreach ($levels as $level) {
+				if (array_key_exists($level, self::$loggers)) {
+					self::$loggers[$level][] = $logger;
+				}
+			}
+		}
+
+				print_r(self::$loggers);
 	}
 
 	public static function debug($message) {
-		self::$logger->debug($message, 'message');
+		foreach (self::$loggers['debug'] as $logger) {
+			$logger->debug($message);
+		}
 	}
 
 	public static function error($message) {
-		$logger = self::$logger;
-		self::$logger->error($message);
+		foreach (self::$loggers['error'] as $logger) {
+			$logger->error($message);
+		}
 	}
 
 	public static function info($message) {
-		self::$logger->info($message, 'info');
+		foreach (self::$loggers['info'] as $logger) {
+			$logger->info($message);
+		}
 	}
 
 	public static function warn($message) {
-		self::$logger->warn($message, 'warn');
+		foreach (self::$loggers['warn'] as $logger) {
+			$logger->warn($message);
+		}
 	}
 
 	public static function log($message) {
-		self::$logger->info($message);
+		self::info($message);
 	}
 }
