@@ -7,7 +7,8 @@ $app = require __DIR__ . '/../src/app.php';
 
 try {
   $config = new FileConfigProvider('../config/production.php');
-  $app->run($config);
-} catch (FileNotFoundException $e) {
-  die ('Fatal error. Could not load config file');
+} catch (Exception $e) {
+  die ('Fatal error. Could not load site configuration');
 }
+
+$app->run($config);
