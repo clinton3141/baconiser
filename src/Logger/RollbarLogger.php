@@ -3,11 +3,12 @@
 namespace iblamefish\baconiser\Logger;
 
 use Rollbar;
+use iblamefish\baconiser\Config\Config;
 
 class RollbarLogger implements iLogger {
   private static $instance;
 
-  private function __construct($config) {
+  private function __construct(Config $config) {
     $accessToken = $config->get('logging.rollbar.access_token');
     $logExceptions = $config->get('logging.rollbar.set_exception_handler');
     $logErrors = $config->get('logging.rollbar.set_error_handler');
