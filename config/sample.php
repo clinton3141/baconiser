@@ -9,6 +9,12 @@ $config = array(
       'set_error_handler' => true,
       'report_fatal_errors' => true
     )
+  ),
+  'templates' => array(
+    'twig' => array(
+      'cache' => '/path/to/cache/',
+      'path' => '/path/to/templates/'
+    )
   )
 );
 
