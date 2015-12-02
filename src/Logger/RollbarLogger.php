@@ -22,7 +22,7 @@ class RollbarLogger implements iLogger {
     );
   }
 
-  public static function getInstance($config) {
+  public static function getInstance(Config $config) {
     if (!self::$instance) {
       self::$instance = new RollbarLogger($config);
     }
