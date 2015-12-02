@@ -3,7 +3,7 @@
 namespace iblamefish\baconiser;
 
 use iblamefish\baconiser\Config\Config;
-use iblamefish\baconiser\Logger\Logger;
+use iblamefish\baconiser\Logger\Log;
 use iblamefish\baconiser\Logger\RollbarLogger;
 
 use iblamefish\baconiser\Template\TwigTemplate;
@@ -19,7 +19,7 @@ class App {
   public function run(Config $config) {
     $this->config = $config;
 
-    Logger::register(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
+    Log::register(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
 
     $template = new TwigTemplate($config);
 

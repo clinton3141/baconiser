@@ -5,7 +5,7 @@ namespace iblamefish\baconiser\Logger;
 use Rollbar;
 use iblamefish\baconiser\Config\Config;
 
-class RollbarLogger implements iLogger {
+class RollbarLogger implements Logger {
   private static $instance;
 
   private function __construct(Config $config) {
