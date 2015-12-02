@@ -15,7 +15,7 @@ class Log {
    *   - warn
    */
   public static function register(Logger $logger, $levels) {
-  if (self::$loggers == null) {
+    if (self::$loggers == null) {
       self::$loggers = array(
         'debug' => array(),
         'error' => array(),
