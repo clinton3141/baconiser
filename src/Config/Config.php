@@ -2,6 +2,6 @@
 
 namespace iblamefish\baconiser\Config;
 
-abstract class Config {
-  public abstract function get($key);
+interface Config {
+  public function get($key);
 }

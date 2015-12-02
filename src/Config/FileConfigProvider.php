@@ -5,7 +5,7 @@ namespace iblamefish\baconiser\Config;
 use iblamefish\baconiser\Exception\FileNotFoundException;
 use iblamefish\baconiser\Exception\ConfigKeyNotFoundException;
 
-class FileConfigProvider extends Config {
+class FileConfigProvider implements Config {
   private $config;
 
   public function __construct($filename) {
