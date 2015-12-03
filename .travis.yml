@@ -4,7 +4,16 @@ php:
   5.5
   5.6
 
+install:
+  - composer require satooshi/php-coveralls
+
 before_script:
   composer install
 
-script: phpunit --configuration tests/phpunit.xml
+script:
+  - mkdir -p build/logs
+  - phpunit --configuration phpunit.xml.dist
+  - phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+  - php vendor/bin/coveralls -v
