@@ -68,6 +68,20 @@ class Log {
     self::info($message);
   }
 
+  /**
+   * Get loggers restered for $level
+   */
+  public static function getLoggers($level = false) {
+    if ($level === false) {
+      return self::$loggers;
+    }
+
+    if (isset(self::$loggers[$level])) {
+      return self::$loggers[$level];
+    }
+    return array();
+  }
+
   private static function send($message, $level) {
     $loggers = self::$loggers[$level];
 
