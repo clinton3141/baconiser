@@ -2,7 +2,7 @@
 
 namespace iblamefish\baconiser\Exception;
 
-class FileNotFoundException extends BaconiserException {
+class TemplateException extends BaconiserException {
   public function __construct($exception) {
     parent::__construct($exception);
   }

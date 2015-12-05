@@ -1,8 +1,13 @@
 <phpunit backupGlobals="true" bootstrap="./tests/bootstrap.php">
-	<testsuite>
-		<directory>./tests</directory>
-	</testsuite>
+  <testsuite>
+    <directory>./tests</directory>
+  </testsuite>
   <logging>
     <log type="coverage-clover" target="build/logs/clover.xml"/>
   </logging>
+  <filter>
+    <whitelist addUncoveredFilesFromWhitelist="true">
+      <directory>./src</directory>
+    </whitelist>
+  </filter>
 </phpunit>

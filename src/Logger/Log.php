@@ -3,7 +3,7 @@
 namespace iblamefish\baconiser\Logger;
 
 class Log {
-  private static $loggers;
+  private static $loggers = array();
 
   /**
    * Register a Logger instance with associated log levels.
@@ -14,21 +14,23 @@ class Log {
    *   - info
    *   - warn
    */
-  public static function register(Logger $logger, $levels) {
-    if (self::$loggers == null) {
+  public static function register(Logger $logger, array $levels) {
+    if (self::$loggers == array()) {
       self::$loggers = array(
-        'debug' => array(),
-        'error' => array(),
-        'info' => array(),
-        'warn' => array()
+        "debug" => array(),
+        "error" => array(),
+        "info" => array(),
+        "warn" => array()
       );
     }
 
-    if (is_array($levels)) {
-      foreach ($levels as $level) {
+    foreach ($levels as $level) {
+      if (is_string($level)) {
         if (array_key_exists($level, self::$loggers)) {
           self::$loggers[$level][] = $logger;
         }
+      } else {
+        throw new \InvalidArgumentException("Log::register must be called with Logger and array<String> of levels");
       }
     }
   }
@@ -62,10 +64,39 @@ class Log {
   }
 
   /**
-   * alias of Logger::info
+   * Remove all loggers for all levels
    */
-  public static function log($message) {
-    self::info($message);
+  public static function unregisterAll() {
+    self::$loggers = array();
+  }
+
+  /**
+   * Remove specified logger
+   */
+  public static function unregister(Logger $logger, array $levels = array()) {
+    foreach (self::$loggers as $level => $loggers) {
+      if (in_array($level, $levels) || count($levels) === 0) {
+        for ($i = 0; $i < count($loggers); $i++) {
+          if ($loggers[$i] === $logger) {
+            array_splice(self::$loggers[$level], $i, 1);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Get loggers registered for $level
+   */
+  public static function getLoggers($level = false) {
+    if ($level === false) {
+      return self::$loggers;
+    }
+
+    if (isset(self::$loggers[$level])) {
+      return self::$loggers[$level];
+    }
+    return array();
   }
 
   private static function send($message, $level) {
