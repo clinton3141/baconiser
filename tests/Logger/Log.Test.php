@@ -9,12 +9,16 @@ class LogTest extends \PHPUnit_Framework_TestCase {
 
   private $logger2;
 
+  private $loggerMethods = array("debug", "info", "error", "warn");
+
   protected function setUp() {
     $this->logger = $this->getMockBuilder("\iblamefish\baconiser\Logger\Logger")
-                         ->getMock();
+                         ->setMethods($this->loggerMethods)
+                         ->getMockForAbstractClass();
 
     $this->logger2 = $this->getMockBuilder("\iblamefish\baconiser\Logger\Logger")
-                         ->getMock();
+                         ->setMethods($this->loggerMethods)
+                         ->getMockForAbstractClass();
   }
 
   protected function tearDown() {
@@ -69,6 +73,44 @@ class LogTest extends \PHPUnit_Framework_TestCase {
     Log::unregisterAll();
 
     $this->assertEquals(Log::getLoggers(), array());
+  }
+
+  public function testShouldSendLogToLogger() {
+    $infoMessage = "to infinity and beyond!";
+
+    $errorMessage = "jet pack failed!";
+
+    Log::register($this->logger, array("info", "error"));
+
+    Log::register($this->logger2, array("info"));
+
+    $this->logger->expects($this->once())
+                 ->method("info")
+                 ->with($infoMessage);
+
+    $this->logger->expects($this->once())
+                 ->method("error")
+                 ->with($errorMessage);
+
+    $this->logger->expects($this->never())
+                 ->method("debug")
+                 ->with($errorMessage);
+
+    $this->logger->expects($this->never())
+                 ->method("warn")
+                 ->with($errorMessage);
+
+    $this->logger2->expects($this->once())
+                  ->method("info")
+                  ->with($infoMessage);
+
+    Log::info($infoMessage);
+
+    Log::error($errorMessage);
+
+    Log::debug("debug");
+
+    Log::warn("warning");
   }
 
   public function testShouldUnregisterSpecifiedLogger() {
