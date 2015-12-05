@@ -20,7 +20,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit --configuration phpunit.xml.dist --colors=always
+  - phpunit --configuration phpunit.xml.dist --colors
   - phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
