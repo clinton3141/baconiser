@@ -17,10 +17,10 @@ class Log {
   public static function register(Logger $logger, array $levels) {
     if (self::$loggers == array()) {
       self::$loggers = array(
-        'debug' => array(),
-        'error' => array(),
-        'info' => array(),
-        'warn' => array()
+        "debug" => array(),
+        "error" => array(),
+        "info" => array(),
+        "warn" => array()
       );
     }
 
