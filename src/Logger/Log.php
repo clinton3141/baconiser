@@ -64,13 +64,6 @@ class Log {
   }
 
   /**
-   * alias of Logger::info
-   */
-  public static function log($message) {
-    self::info($message);
-  }
-
-  /**
    * Remove all loggers for all levels
    */
   public static function unregisterAll() {
