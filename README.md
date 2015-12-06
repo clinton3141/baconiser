@@ -17,6 +17,6 @@ need to use
 
 In no particular order (that'll come later after initial setting up excitement 
 has ceased), here's the current stack. 
-* PHP 5.5.9
+* PHP 7.0 ~~5.5.9~~
 * nginx 1.9.7
 * MySQL 5.5.46
