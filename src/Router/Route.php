@@ -1,6 +1,6 @@
 <?php
 
-namespace iblamefish\baconiser\Route;
+namespace iblamefish\baconiser\Router;
 
 class Route {
   public function __construct() {
