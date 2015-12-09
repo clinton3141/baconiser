@@ -28,6 +28,14 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
      $router->add("GET", $this->registeredPath, $this->route);
    }
 
+   public function testShouldNormaliseRequestMethod() {
+     $router = new Router();
+
+     $router->add("get", $this->registeredPath, $this->route);
+
+     $this->assertEquals($router->get("GET", $this->registeredPath), $this->route);
+   }
+
    public function testShouldAllowDuplicatePathWithDifferentMethod() {
      $router = new Router();
 
