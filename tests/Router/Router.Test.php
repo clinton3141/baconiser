@@ -23,9 +23,34 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
    public function testShouldThrowForDuplicatePath() {
      $router = new Router();
 
-     $router->add($this->registeredPath, $this->route);
+     $router->add("GET", $this->registeredPath, $this->route);
 
-     $router->add($this->registeredPath, $this->route);
+     $router->add("GET", $this->registeredPath, $this->route);
+   }
+
+   public function testShouldAllowDuplicatePathWithDifferentMethod() {
+     $router = new Router();
+
+     $getRoute = new Route();
+
+     $postRoute = new Route();
+
+     $router->add("GET", $this->registeredPath, $getRoute);
+
+     $router->add("POST", $this->registeredPath, $postRoute);
+
+     $this->assertEquals($router->get("GET", $this->registeredPath), $getRoute);
+
+     $this->assertEquals($router->get("POST", $this->registeredPath), $postRoute);
+   }
+
+   /**
+    * @expectedException \iblamefish\baconiser\Exception\RouterException
+    */
+   public function testShouldThrowForInvalidRequestMethod() {
+     $router = new Router();
+
+     $router->add("SPURIOUS", $this->registeredPath, $this->route);
    }
 
    public function shouldForceAddDuplicatePath() {
@@ -33,11 +58,20 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
      $anotherRoute = new Route();
 
-     $router->add($this->registeredPath, $this->route);
+     $router->add("GET", $this->registeredPath, $this->route);
 
-     $router->add($this->registeredPath, $anotherRoute, true);
+     $router->add("GET", $this->registeredPath, $anotherRoute, true);
 
-     $this->assertEquals($router->get($this->registeredPath), $anotherRoute);
+     $this->assertEquals($router->get("GET", $this->registeredPath), $anotherRoute);
+   }
+
+   /**
+    * @expectedException \iblamefish\baconiser\Exception\RouterException
+    */
+   public function testShouldThrowIfGettingUnsupportedHttpMethod() {
+     $router = new Router();
+
+     $router->get("SPURIOUS", $this->unregisteredPath);
    }
 
    /**
@@ -46,15 +80,26 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
    public function testShouldThrowIfGettingUnregisteredRoute() {
      $router = new Router();
 
-     $router->get($this->unregisteredPath);
+     $router->get("GET", $this->unregisteredPath);
+   }
+
+   /**
+    * @expectedException \iblamefish\baconiser\Exception\RouterException
+    */
+   public function testShouldThrowIfGettingUnregisteredRequestMethod() {
+     $router = new Router();
+
+     $router->add("POST", $this->registeredPath, new Route());
+
+     $router->get("GET", $this->registeredPath);
    }
 
    public function testShouldReturnRoute() {
      $router = new Router();
 
-     $router->add($this->registeredPath, $this->route);
+     $router->add("GET", $this->registeredPath, $this->route);
 
-     $returnedRoute = $router->get($this->registeredPath);
+     $returnedRoute = $router->get("GET", $this->registeredPath);
 
      $this->assertEquals($this->route, $returnedRoute);
    }
@@ -62,7 +107,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
    public function testShouldNotThrowIfRemovingUnregisteredRoute() {
      $router = new Router();
 
-     $router->remove($this->unregisteredPath);
+     $router->remove("GET", $this->unregisteredPath);
    }
 
    /**
@@ -73,14 +118,14 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
    public function testShouldRemoveRoute() {
      $router = new Router();
 
-     $router->add($this->registeredPath, $this->route);
+     $router->add("GET", $this->registeredPath, $this->route);
 
-     $router->remove($this->registeredPath);
+     $router->remove("GET", $this->registeredPath);
 
      $success = false;
 
      try {
-       $router->get($this->registeredPath);
+       $router->get("GET", $this->registeredPath);
      } catch (\iblamefish\baconiser\Exception\RouterException $e) {
        $success = true;
      }
