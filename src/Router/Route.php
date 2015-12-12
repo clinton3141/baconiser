@@ -2,6 +2,8 @@
 
 namespace iblamefish\baconiser\Router;
 
+use iblamefish\baconiser\Exception\RouterException;
+
 class Route {
   private $controller;
   private $method;
@@ -37,7 +39,7 @@ class Route {
 
       return call_user_func_array(array($this->controller, $this->method), $arguments);
     } else {
-      throw new \Exception();
+      throw new RouterException("Method {$this->method} does not exist for {$this->path}.");
     }
   }
 }
