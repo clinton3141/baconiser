@@ -3,7 +3,7 @@
 use iblamefish\baconiser\Config\FileConfigProvider;
 use iblamefish\baconiser\Exception\FileNotFoundException;
 
-$app = require __DIR__ . '/../src/app.php';
+$app = require __DIR__ . '/../src/app/app.php';
 
 try {
   $config = new FileConfigProvider('../config/production.php');
