@@ -47,7 +47,7 @@ class RouteTree {
           $step = "*";
           $params[] = $step;
         } else {
-          throw new \Exception("Path not found " . implode("/", $path));
+          throw new \Exception("Path not found " . $path);
         }
       }
 
@@ -55,7 +55,7 @@ class RouteTree {
     }
 
     if ($current["value"] === null) {
-      throw new \Exception("No Route found for path " . implode("/", $path));
+      throw new \Exception("No Route found for path " . $path);
     }
 
     // TODO: params is list of matched parameters. need to return this
