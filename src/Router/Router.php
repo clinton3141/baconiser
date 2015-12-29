@@ -48,6 +48,21 @@ class Router {
     return $route;
   }
 
+  public function run($requestMethod, $path) {
+    try {
+      $match = $this->get($requestMethod, $path);
+
+      $params = $match["params"];
+
+      $route = $match["route"];
+
+      $route->run($params);
+
+    } catch (RouterException $e) {
+      throw $e;
+    }
+  }
+
   public function remove($requestMethod, $path) {
     $method = $this->normaliseRequestMethod($requestMethod);
 

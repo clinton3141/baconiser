@@ -24,7 +24,9 @@ class RouteTreeTest extends \PHPUnit_Framework_TestCase {
 
     $tree->add($this->simpleRoute);
 
-    $this->assertEquals($tree->get("/"), $this->simpleRoute);
+    $match = $tree->get("/");
+
+    $this->assertEquals($match["route"], $this->simpleRoute);
   }
 
   public function testShouldNotRemoveWildcardIfHasChildRoutes() {

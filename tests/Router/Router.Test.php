@@ -13,11 +13,16 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
   private $parameterisedPath = "/post/{:id}/";
 
+  private $parameterisedUri = "/post/12/";
+
+  private $parsedParameters = array("id" => "12");
+
   private $route;
 
   private $anotherRoute;
 
   private $complexRoute;
+
 
   public function setUp() {
     $stubController = $this->getMockBuilder("\iblamefish\baconiser\Controller\Controller")
@@ -47,7 +52,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
      $router->add("get", $this->route);
 
-     $this->assertEquals($router->get("GET", $this->registeredPath), $this->route);
+     $this->assertEquals($router->get("GET", $this->registeredPath)["route"], $this->route);
    }
 
    public function testShouldAllowDuplicatePathWithDifferentMethod() {
@@ -61,9 +66,9 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
      $router->add("POST", $postRoute);
 
-     $this->assertEquals($router->get("GET", $this->registeredPath), $getRoute);
+     $this->assertEquals($router->get("GET", $this->registeredPath)["route"], $getRoute);
 
-     $this->assertEquals($router->get("POST", $this->registeredPath), $postRoute);
+     $this->assertEquals($router->get("POST", $this->registeredPath)["route"], $postRoute);
    }
 
    /**
@@ -121,7 +126,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
      $returnedRoute = $router->get("GET", $this->registeredPath);
 
-     $this->assertEquals($this->route, $returnedRoute);
+     $this->assertEquals($this->route, $returnedRoute["route"]);
    }
 
    public function testShouldNotThrowIfRemovingUnregisteredRoute() {
@@ -158,6 +163,8 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
      $router->add("GET", $this->complexRoute);
 
-     $this->assertEquals($router->get("GET", $this->parameterisedPath), $this->complexRoute);
+     $this->assertEquals($router->get("GET", $this->parameterisedUri)["route"], $this->complexRoute);
+
+     $this->assertEquals($router->get("GET", $this->parameterisedUri)["params"], $this->parsedParameters);
    }
 }
