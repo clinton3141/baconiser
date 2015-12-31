@@ -23,7 +23,7 @@ class App {
   public function run(Config $config) {
     $this->config = $config;
 
-    Log::register(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
+    //Log::register(RollbarLogger::getInstance($config), array('warn', 'info', 'debug', 'error'));
 
     $template = new TwigTemplate($config);
 
@@ -31,12 +31,11 @@ class App {
 
     $defaultRoute = new DefaultController($template);
 
-    $route = new Route("/hello/{:who}/", $defaultRoute, "testAction");
+    $route = new Route("/hello/{:junk}/{:who}/{:stuff}/test", $defaultRoute, "testAction");
 
     $router->add("GET", $route);
 
-    // Route should pass the parameter :who when running
-    $router->get("GET", "/hello/world/")->run(array("who" => "world"));
+    $router->run("GET", "/hello/test/world/something/test");
   }
 }
 

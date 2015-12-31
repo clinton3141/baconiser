@@ -16,8 +16,13 @@ class RouteTree {
 
     $steps = $this->splitPath($route->getPath());
 
+    $parameterNames = array();
+
     foreach ($steps as $step) {
-      if (preg_match("/{:[a-zA-Z]+}/", $step)) {
+      $match = array();
+
+      if (preg_match("/{:([a-zA-Z]+)}/", $step, $match)) {
+        $parameterNames[] = $match[1];
         $step = "*";
       }
 
@@ -31,7 +36,10 @@ class RouteTree {
       throw new DuplicateKeyException("Cannot add duplicate value for path " . $route->getPath() . ".");
     }
 
-    $current["value"] = $route;
+    $current["value"] = array(
+      "route" => $route,
+      "parameterNames" => $parameterNames
+    );
   }
 
   public function get($path) {
@@ -44,10 +52,10 @@ class RouteTree {
     foreach ($steps as $step) {
       if (!isset($current["nodes"][$step])) {
         if (isset($current["nodes"]["*"])) {
-          $step = "*";
           $params[] = $step;
+          $step = "*";
         } else {
-          throw new \Exception("Path not found " . implode("/", $path));
+          throw new \Exception("Path not found " . $path);
         }
       }
 
@@ -55,32 +63,13 @@ class RouteTree {
     }
 
     if ($current["value"] === null) {
-      throw new \Exception("No Route found for path " . implode("/", $path));
+      throw new \Exception("No Route found for path " . $path);
     }
 
-    // TODO: params is list of matched parameters. need to return this
-    return $current["value"];
-  }
-
-  public function remove($path) {
-    $current =& $this->root;
-
-    $escaped = false;
-
-    $steps = $this->splitPath($path);
-
-    foreach ($steps as $step) {
-      if (!isset($current["nodes"][$step])) {
-        $escaped = true;
-        break;
-      }
-
-      $current =& $current["nodes"][$step];
-    }
-
-    if (!$escaped) {
-      $current["value"] = null;
-    }
+    return array(
+      "params" => array_combine($current["value"]["parameterNames"], $params),
+      "route" => $current["value"]["route"]
+    );
   }
 
   private function createNode($value = null, $children = array()) {

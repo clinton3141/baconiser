@@ -48,11 +48,18 @@ class Router {
     return $route;
   }
 
-  public function remove($requestMethod, $path) {
-    $method = $this->normaliseRequestMethod($requestMethod);
+  public function run($requestMethod, $path) {
+    try {
+      $match = $this->get($requestMethod, $path);
 
-    if(isset($this->routes[$method])) {
-      $this->routes[$method]->remove($path);
+      $params = $match["params"];
+
+      $route = $match["route"];
+
+      $route->run($params);
+
+    } catch (RouterException $e) {
+      throw $e;
     }
   }
 
