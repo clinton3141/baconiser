@@ -28,24 +28,4 @@ class RouteTreeTest extends \PHPUnit_Framework_TestCase {
 
     $this->assertEquals($match["route"], $this->simpleRoute);
   }
-
-  public function testShouldNotRemoveWildcardIfHasChildRoutes() {
-    // /path/{:id}/subpath1/
-    // /path/{:id}/subpath2/
-    // remove /path/{:id}/subpath2/
-  }
-
-  public function testShouldRemoveWildCardIfNoChildRoutes() {
-    // /path/{:id}/subpath1/
-    // remove /path/{:id}/subpath1/
-  }
-
-  public function testShouldCleanRendundantPaths() {
-    // add /path/subpath/tertiary/
-    // add /path/path2/
-
-    // remove /path/subpath/tertiary/
-
-    // expect: /path/subpath to throw
-  }
 }

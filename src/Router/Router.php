@@ -63,14 +63,6 @@ class Router {
     }
   }
 
-  public function remove($requestMethod, $path) {
-    $method = $this->normaliseRequestMethod($requestMethod);
-
-    if(isset($this->routes[$method])) {
-      $this->routes[$method]->remove($path);
-    }
-  }
-
   private function normaliseRequestMethod($method) {
     return strtoupper($method);
   }

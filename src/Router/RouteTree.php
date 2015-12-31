@@ -72,27 +72,6 @@ class RouteTree {
     );
   }
 
-  public function remove($path) {
-    $current =& $this->root;
-
-    $escaped = false;
-
-    $steps = $this->splitPath($path);
-
-    foreach ($steps as $step) {
-      if (!isset($current["nodes"][$step])) {
-        $escaped = true;
-        break;
-      }
-
-      $current =& $current["nodes"][$step];
-    }
-
-    if (!$escaped) {
-      $current["value"] = null;
-    }
-  }
-
   private function createNode($value = null, $children = array()) {
     $node = array();
 

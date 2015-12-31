@@ -129,35 +129,6 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
      $this->assertEquals($this->route, $returnedRoute["route"]);
    }
 
-   public function testShouldNotThrowIfRemovingUnregisteredRoute() {
-     $router = new Router();
-
-     $router->remove("GET", $this->unregisteredPath);
-   }
-
-   /**
-    * not asserting an expected exception here in case failures happen
-    * elsewhere in the router. Instead set success flag to true in
-    * the catch block to ensure exception is thrown in expected location
-    */
-   public function testShouldRemoveRoute() {
-     $router = new Router();
-
-     $router->add("GET", $this->route);
-
-     $router->remove("GET", $this->registeredPath);
-
-     $success = false;
-
-     try {
-       $router->get("GET", $this->registeredPath);
-     } catch (\iblamefish\baconiser\Exception\RouterException $e) {
-       $success = true;
-     }
-
-     $this->assertEquals($success, true);
-   }
-
    public function testShouldParseUri() {
      $router = new Router();
 
